@@ -38,7 +38,7 @@
 		playList = data.melon.songs.song; 
 
 		for ( var i= 0 ; i < playList.length ; i++  ) {
-			titleElement += playList[i].artists.artist[0].artistName + "  -  " + playList[i].songName + "<br>"; 
+			titleElement += playList[i].artists.artist[0].artistName + "  -  " + playList[i].songName +  "  -  " + playList[i].songId + "<br>"; 
 		}
 
 		resultElement.html( titleElement );
