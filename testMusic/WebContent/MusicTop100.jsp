@@ -4,7 +4,7 @@
 <title>Open Platform Prototype </title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>  
-<script type="text/javascript" src="/testMovie/js/planetxsdk-1.0.0.js"></script>
+<script type="text/javascript" src="/testMusic/js/planetxsdk-1.0.0.js"></script>
 <script type="text/javascript"> 
 
 	$( function () {  
@@ -39,6 +39,7 @@
 
 		for ( var i= 0 ; i < playList.length ; i++  ) {
 			titleElement += playList[i].artists.artist[0].artistName + "  -  " + playList[i].songName +  "  -  " + playList[i].songId + "<br>"; 
+					
 		}
 
 		resultElement.html( titleElement );
@@ -50,7 +51,7 @@
 
 	<h1>melon Top 100!! </h1>
 	<p>
-	<button onclick="melon()">melon category</button>
+	<button onclick="melon()">melon Top100 Button</button>
 	<div id='melon'></div>
 	</p>
 
