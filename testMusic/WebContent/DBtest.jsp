@@ -1,16 +1,26 @@
+<%@page import="recommendMusic.DBUploader"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="recommendMusic.DBconnector"%>
 <%@page import="recommendMusic.Song"%>
 <%@page import="recommendMusic.SongService"%>
+<%@page import="recommendMusic.SongInfoParser"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@ page contentType="text/html; charset=euc-kr" language="java" %>
-<%@ page import="java.sql.*" %>
+<%@ page contentType="text/html; charset=euc-kr" language="java"%>
+<%@ page import="java.sql.*"%>
 
 <%
-	List<recommendMusic.Song> songList = new ArrayList(); //효상이 파서한테 받음
-	Song song = new Song();
-	song.setSongid(1);
-	song.setSongname("aa");
-	songList.add(song);
-	SongService service = new SongService();
-	service.insertSongList(songList);
+	//SongInfoParser parser = new SongInfoParser();
+	List<String> idList = SongInfoParser.extractSongId();
+	for (String id : idList) {
+		Song oneSong = SongInfoParser.infoParser(id);
+		DBUploader uploader = new DBUploader(oneSong);
+	}
+
+	System.out.println("============================================================");
+	System.out.println( idList.size() );
+
+	
+	//DBconnector a = new DBconnector();
+	//a.getResult("aaa");
 %>

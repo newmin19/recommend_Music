@@ -1,11 +1,11 @@
 package recommendMusic;
-import java.sql.Connection;
+
+import java.sql.Connection; 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 public class DBconnector {
 
@@ -18,7 +18,7 @@ public class DBconnector {
 		String DB_SERVER_PASSWORD = "apmsetup";
 		String DB_DATABASE = "MUSIC";
 
-		String jdbcUrl = "jdbc:mysql://" + DB_SERVER + "/" + DB_DATABASE;
+		String jdbcUrl = "jdbc:mysql://" + DB_SERVER + "/" + DB_DATABASE+"?useUnicode=true&characterEncoding=utf-8";
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -33,7 +33,7 @@ public class DBconnector {
 			Statement stmt;
 			stmt = con.createStatement();
 			stmt.executeUpdate(sql);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -42,11 +42,26 @@ public class DBconnector {
 	}
 
 	public ResultSet getResult(String sql) {
+		sql = "select * from song";
 		ResultSet rs = null;
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			int count = 0;
+			while (rs.next()) {
+				String number = rs.getString("SONGID");
+				String name = rs.getString("SONGNAME");
+				count++;
+				System.out.printf("%s", number);
+				System.out.printf("%s", name);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
-	
-	public void CloseDB(){
+
+	public void CloseDB() {
 		try {
 			con.close();
 		} catch (SQLException e) {
@@ -54,5 +69,5 @@ public class DBconnector {
 		}
 		con = null;
 	}
-	
+
 }

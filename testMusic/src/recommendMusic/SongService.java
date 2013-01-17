@@ -18,12 +18,14 @@ public class SongService {
 			String sql = String.format(
 					" INSERT" +
 					"   INTO SONG" +
-					"		 (SONGID, SONGNAME)" +
-					" VALUES ('%d', '%s')"
+					"		 (SONGID, SONGNAME, ARTIST, DATE)" +
+					" VALUES ('%d', '%s', '%s', '%s')"
 					, song.getSongid()
 					, song.getSongname()
+					, song.getArtist()
+					, song.getDate()
 				);
-			connector.excute(sql);
+				connector.excute(sql);
 			
 			// 노래 스타일 정보 입력(스타일이 다수기때문)
 			List<String> styleList = song.getStyleList();
@@ -33,9 +35,24 @@ public class SongService {
 							" INSERT" +
 							" INTO   SONGSTYLE" +
 							"		 (SONGID, STYLE)" +
-							" VALUES ('%d', '%s')"
+							" VALUES (\"%d\", \"%s\")"
 							, song.getSongid()
 							, style
+						);
+					connector.excute(sql);
+				}
+			}
+			
+			List<String> genreList = song.getGenreList();
+			if(genreList != null){
+				for (String genre : genreList) {
+					sql = String.format(
+							" INSERT" +
+							" INTO   SONGGENRE" +
+							"		 (SONGID, GENRE)" +
+							" VALUES ('%d', '%s')"
+							, song.getSongid()
+							, genre
 						);
 					connector.excute(sql);
 				}
