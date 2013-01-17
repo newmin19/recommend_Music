@@ -13,7 +13,7 @@ import net.htmlparser.jericho.Source;
 public class SongInfoParser {
 //	public static void main(String[] args) throws MalformedURLException, IOException {
 //		for (String id : extractSongId()) {
-//			SongInfoParser(id);
+//				infoParser(id);
 //		}
 //	}
 
@@ -23,10 +23,10 @@ public class SongInfoParser {
 		Song song = new Song();
 		List<String> styleList = new ArrayList<String>();
 		List<String> genreList = new ArrayList<String>();
+		List<String> artistList = new ArrayList<String>();
 		Element songDetailSource = extractFromClassName(musicDetailPageUrl, "soBox2", 0);
 		
 		String songName = extractFromClassName(musicDetailPageUrl, "titT", 0).getContent().getTextExtractor().toString();
-		String artist = extractFromClassName(musicDetailPageUrl, "soTit", 1).getContent().getTextExtractor().toString();
 		String date = songDetailSource.getAllElements(HTMLElementName.DD).get(0).getContent().getTextExtractor().toString();
 		
 		String genre = songDetailSource.getAllElements(HTMLElementName.DD).get(1).getContent().getTextExtractor().toString();
@@ -39,14 +39,21 @@ public class SongInfoParser {
 		while (st.hasMoreElements()) {
 			styleList.add(st.nextToken().trim());
 		}
-		song.setArtist(artist);
+		
+		String artist = extractFromClassName(musicDetailPageUrl, "soTit", 1).getContent().getTextExtractor().toString();
+		StringTokenizer st2 = new StringTokenizer(artist, ",");
+		while (st2.hasMoreElements()) {
+			artistList.add(st2.nextToken().trim());
+		}
+
 		song.setDate(date);
 		song.setSongid(songid);
 		song.setSongname(songName);
+		song.setArtistList(artistList);
 		song.setGenreList(genreList);
 		song.setStyleList(styleList);
 		
-		outTest(songName, artist, date, genreList, styleList, songId);
+		outTest(songName, artistList, date, genreList, styleList, songId);
 		return song;
 	}
 
@@ -89,9 +96,9 @@ public class SongInfoParser {
 		return element;
 	}
 
-	private static void outTest(String songName, String artist, String date, List<String> genreList, List<String> styleList, String id) {
+	private static void outTest(String songName, List<String> artistList, String date, List<String> genreList, List<String> styleList, String id) {
 		System.out.println(songName);
-		System.out.println(artist);
+		System.out.println(artistList);
 		System.out.println(date);
 		System.out.println(genreList);
 		System.out.println(styleList);

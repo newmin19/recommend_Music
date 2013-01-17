@@ -9,10 +9,10 @@ public class Song {
 
 	private int songid;
 	private String songname;
-	private String artist;
 	private String date;
 	private List<String> styleList;
 	private List<String> genreList;
+	private List<String> artistList;
 	
 	public int getSongid() {
 		return songid;
@@ -26,18 +26,21 @@ public class Song {
 	public void setSongname(String songname) {
 		this.songname = songname;
 	}
-	public String getArtist() {
-		return artist;
-	}
-	public void setArtist(String artist) {
-		this.artist = artist;
-	}
+	
 	public List<String> getGenreList() {
 		return genreList;
 	}
 	public void setGenreList(List<String> genreList) {
 		this.genreList = genreList;
 	}
+	
+	public List<String> getArtistList() {
+		return artistList;
+	}
+	public void setArtistList(List<String> artistList) {
+		this.artistList = artistList;
+	}
+	
 	public String getDate() {
 		return date;
 	}

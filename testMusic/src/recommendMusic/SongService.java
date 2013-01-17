@@ -18,11 +18,10 @@ public class SongService {
 			String sql = String.format(
 					" INSERT" +
 					"   INTO SONG" +
-					"		 (SONGID, SONGNAME, ARTIST, DATE)" +
-					" VALUES ('%d', '%s', '%s', '%s')"
+					"		 (SONGID, SONGNAME, DATE)" +
+					" VALUES ('%d', '%s', '%s')"
 					, song.getSongid()
 					, song.getSongname()
-					, song.getArtist()
 					, song.getDate()
 				);
 				connector.excute(sql);
@@ -50,9 +49,24 @@ public class SongService {
 							" INSERT" +
 							" INTO   SONGGENRE" +
 							"		 (SONGID, GENRE)" +
-							" VALUES ('%d', '%s')"
+							" VALUES (\"%d\", \"%s\")"
 							, song.getSongid()
 							, genre
+						);
+					connector.excute(sql);
+				}
+			}
+			
+			List<String> artistList = song.getArtistList();
+			if(artistList != null){
+				for (String artist : artistList) {
+					sql = String.format(
+							" INSERT" +
+							" INTO   SONGARTIST" +
+							"		 (SONGID, ARTIST)" +
+							" VALUES ('%d', '%s')"
+							, song.getSongid()
+							, artist
 						);
 					connector.excute(sql);
 				}
