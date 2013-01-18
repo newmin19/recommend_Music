@@ -61,7 +61,7 @@
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
 	
-	<div class="fb-comments" data-href="http://apps.facebook.com/recommendmusic" data-width="750" data-num-posts="4"></div>
+	
 	<!-- 단추 달 곳에 붙이는 코드 -->
 	<br>
 </body>
