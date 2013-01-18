@@ -10,6 +10,10 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.HTMLElementName;
 import net.htmlparser.jericho.Source;
 
+/**
+ * 
+ * @author hyosang
+ */
 public class SongInfoParser {
 //	public static void main(String[] args) throws MalformedURLException, IOException {
 //		for (String id : extractSongId()) {

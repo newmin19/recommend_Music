@@ -42,18 +42,16 @@ public class DBconnector {
 	}
 
 	public ResultSet getResult(String sql) {
-		sql = "select * from song";
+		sql = "select * from song order by rand() limit 2";
 		ResultSet rs = null;
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			int count = 0;
 			while (rs.next()) {
-				String number = rs.getString("SONGID");
 				String name = rs.getString("SONGNAME");
 				count++;
-				System.out.printf("%s", number);
-				System.out.printf("%s", name);
+				System.out.printf("%s\n", name);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
