@@ -15,10 +15,6 @@ import net.htmlparser.jericho.Source;
  * @author hyo-sang
  */
 public class SongInfoParser {
-//	public static void main(String[] args) throws MalformedURLException, IOException {
-//		//makeSongList();
-//		infoParser("3935594");
-//	}
 
 	private static void makeSongList() throws MalformedURLException,
 			IOException {
