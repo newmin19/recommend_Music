@@ -12,15 +12,17 @@ import net.htmlparser.jericho.Source;
 
 /**
  * 
- * @author hyosang
+ * @author hyo-sang
  */
 public class SongInfoParser {
-//	public static void main(String[] args) throws MalformedURLException, IOException {
-//		for (String id : extractSongId()) {
-//				infoParser(id);
-//		}
-//	}
 
+	private static void makeSongList() throws MalformedURLException,
+			IOException {
+		for (String id : extractSongId()) {
+				infoParser(id);
+		}
+	}
+	
 	public static Song infoParser(String songId) throws IOException, MalformedURLException {
 		int songid = Integer.parseInt(songId);
 		String musicDetailPageUrl = musicDetailPageUrlExtract(songId);
@@ -32,22 +34,33 @@ public class SongInfoParser {
 		
 		String songName = extractFromClassName(musicDetailPageUrl, "titT", 0).getContent().getTextExtractor().toString();
 		String date = songDetailSource.getAllElements(HTMLElementName.DD).get(0).getContent().getTextExtractor().toString();
-		
-		String genre = songDetailSource.getAllElements(HTMLElementName.DD).get(1).getContent().getTextExtractor().toString();
-		StringTokenizer st1 = new StringTokenizer(genre, "/");
-		while (st1.hasMoreElements()) {
-			genreList.add(st1.nextToken().trim());
+		try {	
+			String genre = songDetailSource.getAllElements(HTMLElementName.DD).get(1).getContent().getTextExtractor().toString();
+			StringTokenizer st1 = new StringTokenizer(genre, "/");
+			while (st1.hasMoreElements()) {
+				genreList.add(st1.nextToken().trim());
+			}
+		} catch (IndexOutOfBoundsException e) {
+			styleList.add("none");
+		}	
+		try {
+			String style = songDetailSource.getAllElements(HTMLElementName.DD).get(2).getContent().getTextExtractor().toString();
+			StringTokenizer st = new StringTokenizer(style, ",");
+			while (st.hasMoreElements()) {
+				styleList.add(st.nextToken().trim());
+			}
+		} catch (IndexOutOfBoundsException e) {
+			styleList.add("none");
 		}
-		String style = songDetailSource.getAllElements(HTMLElementName.DD).get(2).getContent().getTextExtractor().toString();
-		StringTokenizer st = new StringTokenizer(style, ",");
-		while (st.hasMoreElements()) {
-			styleList.add(st.nextToken().trim());
-		}
 		
-		String artist = extractFromClassName(musicDetailPageUrl, "soTit", 1).getContent().getTextExtractor().toString();
-		StringTokenizer st2 = new StringTokenizer(artist, ",");
-		while (st2.hasMoreElements()) {
-			artistList.add(st2.nextToken().trim());
+		try {
+			String artist = extractFromClassName(musicDetailPageUrl, "soTit", 1).getContent().getTextExtractor().toString();
+			StringTokenizer st2 = new StringTokenizer(artist, ",");
+			while (st2.hasMoreElements()) {
+				artistList.add(st2.nextToken().trim());
+			}
+		} catch (IndexOutOfBoundsException e) {
+			styleList.add("none");
 		}
 
 		song.setDate(date);
@@ -60,27 +73,19 @@ public class SongInfoParser {
 		outTest(songName, artistList, date, genreList, styleList, songId);
 		return song;
 	}
-
-//	static Source source;
-//	
-//	static {
-//		try {
-//			source = new Source(new URL("http://www.melon.com/cds/chart/web/chartrealtime_list.htm"));
-//		} catch (MalformedURLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
 	
 	public static List<String> extractSongId() throws MalformedURLException, IOException {
 		Source source = new Source(new URL("http://www.melon.com/cds/chart/web/chartrealtime_list.htm"));
 		List<String> songIdList = new ArrayList<String>();
 		
-		// 급상승 2개 있어서 2번부터
+		// 순위 외에 중복으로 급상승곡 두곡 제외
 		for(int songIndex=2;songIndex<52;songIndex++){
+			String songIdListSource = source.getAllElementsByClass("lineLine1").get(songIndex).getAllElements(HTMLElementName.A).get(0).getAttributeValue("href");
+			StringTokenizer testST = new StringTokenizer(songIdListSource, "'");
+			testST.nextToken();
+			songIdList.add(testST.nextToken().trim());
+		}
+		for(int songIndex=54;songIndex<104;songIndex++){
 			String songIdListSource = source.getAllElementsByClass("lineLine1").get(songIndex).getAllElements(HTMLElementName.A).get(0).getAttributeValue("href");
 			StringTokenizer testST = new StringTokenizer(songIdListSource, "'");
 			testST.nextToken();
