@@ -11,16 +11,16 @@
 
 <%
 	//SongInfoParser parser = new SongInfoParser();
-	//List<String> idList = SongInfoParser.extractSongId();
-	//for (String id : idList) {
-	//	Song oneSong = SongInfoParser.infoParser(id);
-	//	DBUploader uploader = new DBUploader(oneSong);
-	//}
+	List<String> idList = SongInfoParser.extractSongId();
+	for (String id : idList) {
+		Song oneSong = SongInfoParser.infoParser(id);
+		DBUploader uploader = new DBUploader(oneSong);
+	}
 
-	//System.out.println("============================================================");
-	//System.out.println( idList.size() );
+	System.out.println("============================================================");
+	System.out.println( idList.size() );
 
 	
-	DBconnector a = new DBconnector();
-	a.getResult("aaa");
+	//DBconnector a = new DBconnector();
+	//a.getResult("aaa");
 %>
