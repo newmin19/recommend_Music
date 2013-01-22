@@ -3,10 +3,18 @@ package recommendMusic;
 public class FacebookData {
 
 	private String email;
-
 	private String sex;
 	private String birthDay;
 	private String music;
+	private String wallData;
+
+	public String getWallData() {
+		return wallData;
+	}
+
+	public void setWallData(String wallData) {
+		this.wallData = wallData;
+	}
 
 	public String getEmail() {
 		return email;

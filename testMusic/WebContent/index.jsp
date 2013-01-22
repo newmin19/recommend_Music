@@ -66,7 +66,7 @@ body {
 			FB.login(function(response) {
 				LoginSuccessGo(response);
 			}, {
-				scope : 'publish_stream,email,user_location,user_hometown'
+				scope : 'publish_stream,email,user_location,user_hometown,read_stream'
 			});
 		};
 
@@ -89,7 +89,6 @@ body {
 			//		'_top', '', false);
 			//getUser(response);
 			getUser(response);
-			document.user.submit;
 		}
 	
 		function getUser(response) {
@@ -111,10 +110,23 @@ body {
 							
 
 							console.log(response[i]);
-							document.user.submit.click();
+							
+							FB.api('/me/posts', { limit: 10 }, function(response1) {
+									console.log(response1);
+								    for (var i=0, l=response1.data.length; i<l; i++) {
+								  		var post = response1.data[i];
+								  		document.user.walldata.value +=  "__div__"+ ( response1.data[i].message != null ? response1.data[i].message : "");
+										console.log(post.message);
+								    }
+								    document.user.walldata.value = encodeURI(document.user.walldata.value);
+								    //document.user.submit.click();
+							});
+							
+							
 						}
 					});
 		}
+		
 	</script>
 	<form name="user" action="Insert.jsp">
 		<input type="text" name="email" />
@@ -123,6 +135,7 @@ body {
 		<input type="text" name="birthday" />
 		<input type="text" name="music" />
 		<input type="text" name="sex" />
+		<input type="text" name="walldata" />
 		<input type="submit" name="submit">
 	</form>
 </body>

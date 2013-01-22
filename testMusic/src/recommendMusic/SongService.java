@@ -1,4 +1,6 @@
 package recommendMusic;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.List;
 
 
@@ -49,15 +51,17 @@ public class SongService{
 	public void insertData(FacebookData data){
 		DBconnector connector = new DBconnector();
 		
-		String sql = String.format(
+		String sql = null;
+		sql = String.format(
 				" INSERT" +
 						"   INTO FACEBOOKDATA" +
-						"		 (EMAIL, SEX, BIRTHDAY, MUSIC)" +
-						" VALUES ('%s', '%s', '%s', '%s')"
+						"		 (EMAIL, SEX, BIRTHDAY, MUSIC, WALLDATA)" +
+						" VALUES ('%s', '%s', '%s', '%s', '%s')"
 						, data.getEmail()
 						, data.getSex()
 						, data.getBirthDay()
 						, data.getMusic()
+						, data.getWallData()
 				);
 		connector.excute(sql);
 		connector.CloseDB();
